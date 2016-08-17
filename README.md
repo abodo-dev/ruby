@@ -913,18 +913,18 @@ In either case:
     SomeModule::SomeClass()
     ```
 
-* <a name="redundant-return"></a>Avoid `return` where not required.
+* <a name="ensure-return"></a>Explicitly state return value with `return`.
     <sup>[[link](#redundant-return)]</sup>
 
     ```ruby
     # bad
     def some_method(some_arr)
-      return some_arr.size
+      some_arr.size
     end
-
+    
     # good
     def some_method(some_arr)
-      some_arr.size
+      return some_arr.size
     end
     ```
 
