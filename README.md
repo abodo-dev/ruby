@@ -513,8 +513,7 @@ Thus when you create a TODO, it is almost always your name that is given.
      end
      ```
 
-* <a name="no-default-args"></a>Do not use default arguments. Use an options
-    hash instead.<sup>[[link](#no-default-args)]</sup>
+* <a name="no-default-args"></a>Do not use default arguments. Use keyword arguments instead.<sup>[[link](#no-default-args)]</sup>
 
     ```ruby
     # bad
@@ -523,14 +522,7 @@ Thus when you create a TODO, it is almost always your name that is given.
     end
 
     # good
-    def obliterate(things, options = {})
-      default_options = {
-        :gently => true, # obliterate with soft-delete
-        :except => [], # skip obliterating these things
-        :at => Time.now, # don't obliterate them until later
-      }
-      options.reverse_merge!(default_options)
-
+    def obliterate(things, gently: true, except: [], at: Time.now)
       ...
     end
     ```
@@ -605,10 +597,10 @@ Thus when you create a TODO, it is almost always your name that is given.
 
     ```ruby
     # okay
-    render(:partial => 'foo')
+    render(partial: 'foo')
 
     # okay
-    render :partial => 'foo'
+    render partial: 'foo'
     ```
 
 In either case:
@@ -619,10 +611,10 @@ In either case:
 
     ```ruby
     # bad
-    get '/v1/reservations', { :id => 54875 }
+    get '/v1/reservations', { id: 54875 }
 
     # good
-    get '/v1/reservations', :id => 54875
+    get '/v1/reservations', id: 54875
     ```
 
 ## Conditional Expressions
@@ -955,7 +947,7 @@ In either case:
 
     ```ruby
     # set name to Bozhidar, only if it's nil or false
-    name ||= 'Bozhidar'
+    name ||= "Bozhidar"
     ```
 
 * <a name="no-double-pipes-for-bools"></a>Don't use `||=` to initialize boolean
@@ -1063,7 +1055,7 @@ In either case:
 
     ```ruby
     class Parent
-      @@class_var = 'parent'
+      @@class_var = "parent"
 
       def self.print_class_var
         puts @@class_var
@@ -1071,7 +1063,7 @@ In either case:
     end
 
     class Child < Parent
-      @@class_var = 'child'
+      @@class_var = "child"
     end
 
     Parent.print_class_var # => will print "child"
@@ -1201,7 +1193,7 @@ In either case:
 
     ```ruby
     # bad
-    raise RuntimeError, 'message'
+    raise RuntimeError, "message"
 
     # better - RuntimeError is implicit here
     raise 'message'
@@ -1264,12 +1256,12 @@ In either case:
 
     ```ruby
     # bad
-    %w(one two three) * ', '
-    # => 'one, two, three'
+    %w(one two three) * ", "
+    # => "one, two, three"
 
     # good
-    %w(one two three).join(', ')
-    # => 'one, two, three'
+    %w(one two three).join(", ")
+    # => "one, two, three"
     ```
 
 * <a name="symbol-keys"></a>Use symbols instead of strings as hash keys.
@@ -1277,10 +1269,10 @@ In either case:
 
     ```ruby
     # bad
-    hash = { 'one' => 1, 'two' => 2, 'three' => 3 }
+    hash = { "one" => 1, "two" => 2, "three" => 3 }
 
     # good
-    hash = { :one => 1, :two => 2, :three => 3 }
+    hash = { one: 1, two: 2, three: 3 }
     ```
 
 * <a name="symbol-literals"></a>Relatedly, use plain symbols instead of string
@@ -1316,12 +1308,12 @@ In either case:
 
     ```ruby
     hash = {
-      :protocol => 'https',
-      :only_path => false,
-      :controller => :users,
-      :action => :set_password,
-      :redirect => @redirect_url,
-      :secret => @secret,
+      protocol: 'https',
+      only_path: false,
+      controller: :users,
+      action: :set_password,
+      redirect: @redirect_url,
+      secret: @secret,
     }
     ```
 
@@ -1348,7 +1340,7 @@ In either case:
 
     ```ruby
     # bad
-    email_with_name = user.name + ' <' + user.email + '>'
+    email_with_name = user.name + " <" + user.email + ">"
 
     # good
     email_with_name = "#{user.name} <#{user.email}>"
@@ -1358,7 +1350,7 @@ In either case:
   composing cache keys like this:
 
     ```ruby
-    CACHE_KEY = '_store'
+    CACHE_KEY = "_store"
 
     cache.write(@user.id + CACHE_KEY)
     ```
@@ -1366,7 +1358,7 @@ In either case:
     Prefer string interpolation instead of string concatenation:
 
     ```ruby
-    CACHE_KEY = '%d_store'
+    CACHE_KEY = "%d_store"
 
     cache.write(CACHE_KEY % @user.id)
     ```
@@ -1378,8 +1370,8 @@ In either case:
 
     ```ruby
     # good and also fast
-    html = ''
-    html << '<h1>Page title</h1>'
+    html = ""
+    html << "<h1>Page title</h1>"
 
     paragraphs.each do |paragraph|
       html << "<p>#{paragraph}</p>"
@@ -1525,18 +1517,18 @@ In either case:
 
     ```ruby
     # bad
-    render :text => 'Howdy' and return
+    render text: "Howdy" and return
 
     # good
-    render :text => 'Howdy'
+    render text: "Howdy"
     return
 
     # still bad
-    render :text => 'Howdy' and return if foo.present?
+    render text: "Howdy" and return if foo.present?
 
     # good
     if foo.present?
-      render :text => 'Howdy'
+      render text: "Howdy"
       return
     end
     ```
@@ -1549,10 +1541,10 @@ In either case:
 
     ```ruby
     # bad
-    scope :foo, where(:bar => 1)
+    scope :foo, where(bar: 1)
 
     # good
-    scope :foo, -> { where(:bar => 1) }
+    scope :foo, -> { where(bar: 1) }
     ```
 
 ## Be Consistent
